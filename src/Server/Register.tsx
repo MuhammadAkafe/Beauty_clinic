@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { NavigateFunction } from 'react-router-dom';
 interface RegisterFormData {
   username: string;
   email: string;
@@ -33,7 +33,7 @@ export default function Register() {
     password: '',
     confirm_password: ''
   });
-  const navigate = useNavigate();
+  const navigate:NavigateFunction= useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -220,6 +220,6 @@ export default function Register() {
         </div>
       </div>
     </div>
-    
+
   );
 } 
