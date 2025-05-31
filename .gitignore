@@ -3,6 +3,10 @@
 /.pnp
 .pnp.js
 
+
+
+.gitignore
+
 # Testing
 /coverage
 
