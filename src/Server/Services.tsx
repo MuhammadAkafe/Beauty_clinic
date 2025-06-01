@@ -37,15 +37,15 @@ const Services: React.FC = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>علاج آلام المفاصل</span>
-                    <span className="text-primary fw-bold">200 ريال</span>
+                    <span className="text-primary fw-bold">200 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>إعادة تأهيل الإصابات</span>
-                    <span className="text-primary fw-bold">250 ريال</span>
+                    <span className="text-primary fw-bold">250 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>علاج آلام الظهر والرقبة</span>
-                    <span className="text-primary fw-bold">180 ريال</span>
+                    <span className="text-primary fw-bold">180 ₪</span>
                   </li>
                 </ul>
                 <div className="mt-4">
@@ -83,15 +83,15 @@ const Services: React.FC = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تدليك العضلات العميق</span>
-                    <span className="text-primary fw-bold">300 ريال</span>
+                    <span className="text-primary fw-bold">200 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تدليك الأنسجة الرخوة</span>
-                    <span className="text-primary fw-bold">250 ريال</span>
+                    <span className="text-primary fw-bold">250 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تدليك نقاط الضغط</span>
-                    <span className="text-primary fw-bold">280 ريال</span>
+                    <span className="text-primary fw-bold">180 ₪</span>
                   </li>
                 </ul>
                 <div className="mt-4">
@@ -129,15 +129,15 @@ const Services: React.FC = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالموجات فوق الصوتية</span>
-                    <span className="text-primary fw-bold">220 ريال</span>
+                    <span className="text-primary fw-bold">300 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالتبريد</span>
-                    <span className="text-primary fw-bold">180 ريال</span>
+                    <span className="text-primary fw-bold">250 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالأشعة تحت الحمراء</span>
-                    <span className="text-primary fw-bold">200 ريال</span>
+                    <span className="text-primary fw-bold">280 ₪</span>
                   </li>
                 </ul>
                 <div className="mt-4">
@@ -171,15 +171,15 @@ const Services: React.FC = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تمارين تقوية العضلات</span>
-                    <span className="text-primary fw-bold">350 ريال</span>
+                    <span className="text-primary fw-bold">350 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تمارين التوازن</span>
-                    <span className="text-primary fw-bold">300 ريال</span>
+                    <span className="text-primary fw-bold">300 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تمارين المرونة</span>
-                    <span className="text-primary fw-bold">280 ريال</span>
+                    <span className="text-primary fw-bold">280 ₪</span>
                   </li>
                 </ul>
                 <div className="mt-4">
@@ -217,15 +217,15 @@ const Services: React.FC = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالماء الساخن</span>
-                    <span className="text-primary fw-bold">250 ريال</span>
+                    <span className="text-primary fw-bold">250 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>تمارين العلاج المائي</span>
-                    <span className="text-primary fw-bold">300 ريال</span>
+                    <span className="text-primary fw-bold">300 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالتدليك المائي</span>
-                    <span className="text-primary fw-bold">280 ريال</span>
+                    <span className="text-primary fw-bold">280 ₪</span>
                   </li>
                 </ul>
                 <div className="mt-4">
@@ -256,15 +256,15 @@ const Services: React.FC = () => {
                 <ul className="list-unstyled">
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>التحفيز الكهربائي</span>
-                    <span className="text-primary fw-bold">220 ريال</span>
+                    <span className="text-primary fw-bold">220 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالتيار المتداخل</span>
-                    <span className="text-primary fw-bold">250 ريال</span>
+                    <span className="text-primary fw-bold">250 ₪</span>
                   </li>
                   <li className="mb-3 d-flex justify-content-between align-items-center">
                     <span>العلاج بالتحفيز العصبي</span>
-                    <span className="text-primary fw-bold">280 ريال</span>
+                    <span className="text-primary fw-bold">280 ₪</span>
                   </li>
                 </ul>
                 <div className="mt-4">

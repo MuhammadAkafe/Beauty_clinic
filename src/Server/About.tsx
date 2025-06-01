@@ -35,7 +35,7 @@ const About: React.FC = () => {
                   <div className="position-relative">
                     <div className="ratio ratio-4x3">
                       <img 
-                        src="/images/clinic.jpg" 
+                        src="../../src/assets/clinic.jpg" 
                         alt="عيادة الطب الطبيعي" 
                         className="rounded-3 shadow-lg object-fit-cover"
                       />
