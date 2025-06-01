@@ -49,7 +49,7 @@ const Services: React.FC = () => {
                   </li>
                 </ul>
                 <div className="mt-4">
-                  <a href="tel:+972524366637" className="btn btn-outline-primary w-100">
+                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
                     <i className="fas fa-phone me-2"></i>
                     احجز موعد
                   </a>
@@ -95,7 +95,7 @@ const Services: React.FC = () => {
                   </li>
                 </ul>
                 <div className="mt-4">
-                  <a href="tel:+972524366637" className="btn btn-outline-primary w-100">
+                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
                     <i className="fas fa-phone me-2"></i>
                     احجز موعد
                   </a>
@@ -141,7 +141,7 @@ const Services: React.FC = () => {
                   </li>
                 </ul>
                 <div className="mt-4">
-                  <a href="tel:+972524366637" className="btn btn-outline-primary w-100">
+                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
                     <i className="fas fa-phone me-2"></i>
                     احجز موعد
                   </a>
@@ -183,7 +183,7 @@ const Services: React.FC = () => {
                   </li>
                 </ul>
                 <div className="mt-4">
-                  <a href="tel:+972524366637" className="btn btn-outline-primary w-100">
+                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
                     <i className="fas fa-phone me-2"></i>
                     احجز موعد
                   </a>
@@ -229,7 +229,7 @@ const Services: React.FC = () => {
                   </li>
                 </ul>
                 <div className="mt-4">
-                  <a href="tel:+972524366637" className="btn btn-outline-primary w-100">
+                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
                     <i className="fas fa-phone me-2"></i>
                     احجز موعد
                   </a>
@@ -268,7 +268,7 @@ const Services: React.FC = () => {
                   </li>
                 </ul>
                 <div className="mt-4">
-                  <a href="tel:+972524366637" className="btn btn-outline-primary w-100">
+                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
                     <i className="fas fa-phone me-2"></i>
                     احجز موعد
                   </a>
@@ -292,7 +292,7 @@ const Services: React.FC = () => {
                         <i className="fas fa-phone fa-2x text-primary"></i>
                       </div>
                       <h3 className="h5 fw-bold mb-2">اتصل بنا</h3>
-                      <p className="text-muted mb-0">+972 52 436 6637</p>
+                      <p className="text-muted mb-0">+972528546620</p>
                     </div>
                   </div>
                   <div className="col-md-4">
@@ -315,7 +315,7 @@ const Services: React.FC = () => {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center gap-3">
-                  <a href="https://wa.me/972524366637" className="btn btn-success btn-lg">
+                  <a href="https://wa.me/972090222222" className="btn btn-success btn-lg">
                     <i className="fab fa-whatsapp me-2"></i>
                     تواصل عبر واتساب
                   </a>
