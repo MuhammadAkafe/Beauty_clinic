@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../axios_instance';
 interface LoginFormData {
   email: string;
   password: string;
@@ -14,7 +15,7 @@ interface LoginResponse {
 
 const authenticateUser = async (credentials: LoginFormData): Promise<LoginResponse> => {
     try {
-        const response = await axios.post<LoginResponse>('http://localhost:3000/auth/Login', credentials);
+        const response = await axiosInstance.post<LoginResponse>('/Login', credentials);
         return response.data;
     } 
     catch (error:any) 

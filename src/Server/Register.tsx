@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NavigateFunction } from 'react-router-dom';
+import axiosInstance from '../axios_instance';
 interface RegisterFormData {
   username: string;
   email: string;
@@ -16,12 +17,12 @@ interface RegisterResponse {
 
 const create_User = async (userData: RegisterFormData): Promise<RegisterResponse> => {
   try {
-    const response = await axios.post('http://localhost:3000/auth/Register', userData);
+    const response = await axiosInstance.post<RegisterResponse>('/Register', userData);
     return response.data;
   } 
-  catch (error) {
+  catch (error:any) {
     console.error('Error registering user:', error);
-    return { success: false, message: 'حدث خطأ أثناء إنشاء الحساب' };
+    return { success: false, message: error.response.data.message };
   }
 };  
 
