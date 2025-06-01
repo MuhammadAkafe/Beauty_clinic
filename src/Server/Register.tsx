@@ -117,19 +117,25 @@ export default function Register() {
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{
-      background: 'linear-gradient(135deg, #00b4db 0%, #0083b0 100%)',
+      background: 'linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)',
       padding: '20px'
     }}>
-      <div className="card shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
+      <div className="card shadow-lg border-0" style={{ 
+        maxWidth: '500px', 
+        width: '100%',
+        borderRadius: '16px',
+        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)'
+      }}>
         <div className="card-body p-5">
           <div className="text-center mb-4">
-            <h1 className="h3 fw-bold text-dark mb-2">إنشاء حساب جديد</h1>
+            <h1 className="h3 fw-bold text-primary mb-2">إنشاء حساب جديد</h1>
             <p className="text-muted">انضم إلينا اليوم</p>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="mb-3 text-end">
-              <label htmlFor="name" className="form-label fw-semibold">
+            <div className="mb-4 text-end">
+              <label htmlFor="name" className="form-label fw-semibold text-primary">
                 الاسم الكامل
               </label>
               <input
@@ -138,15 +144,16 @@ export default function Register() {
                 name="username"
                 value={formData.username}
                 onChange={handleInputChange}
-                className={`form-control ${errors.username ? 'is-invalid' : ''}`}
+                className={`form-control form-control-lg ${errors.username ? 'is-invalid' : ''}`}
                 placeholder="أدخل اسمك الكامل"
                 dir="rtl"
+                style={{ borderRadius: '12px' }}
               />
               {errors.username && <div className="invalid-feedback text-end">{errors.username}</div>}
             </div>
 
-            <div className="mb-3 text-end">
-              <label htmlFor="email" className="form-label fw-semibold">
+            <div className="mb-4 text-end">
+              <label htmlFor="email" className="form-label fw-semibold text-primary">
                 البريد الإلكتروني
               </label>
               <input
@@ -155,15 +162,16 @@ export default function Register() {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`}
                 placeholder="أدخل بريدك الإلكتروني"
                 dir="rtl"
+                style={{ borderRadius: '12px' }}
               />
               {errors.email && <div className="invalid-feedback text-end">{errors.email}</div>}
             </div>
 
-            <div className="mb-3 text-end">
-              <label htmlFor="password" className="form-label fw-semibold">
+            <div className="mb-4 text-end">
+              <label htmlFor="password" className="form-label fw-semibold text-primary">
                 كلمة المرور
               </label>
               <input
@@ -172,15 +180,16 @@ export default function Register() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`}
                 placeholder="أدخل كلمة المرور"
                 dir="rtl"
+                style={{ borderRadius: '12px' }}
               />
               {errors.password && <div className="invalid-feedback text-end">{errors.password}</div>}
             </div>
 
             <div className="mb-4 text-end">
-              <label htmlFor="confirmPassword" className="form-label fw-semibold">
+              <label htmlFor="confirmPassword" className="form-label fw-semibold text-primary">
                 تأكيد كلمة المرور
               </label>
               <input
@@ -189,15 +198,16 @@ export default function Register() {
                 name="confirm_password"
                 value={formData.confirm_password}
                 onChange={handleInputChange}
-                className={`form-control ${errors.confirm_password ? 'is-invalid' : ''}`}
+                className={`form-control form-control-lg ${errors.confirm_password ? 'is-invalid' : ''}`}
                 placeholder="أدخل كلمة المرور مرة أخرى"
                 dir="rtl"
+                style={{ borderRadius: '12px' }}
               />
               {errors.confirm_password && <div className="invalid-feedback text-end">{errors.confirm_password}</div>}
             </div>
 
             {message && (
-              <div className={`alert ${isSuccess ? 'alert-success' : 'alert-danger'} text-center mb-4`}>
+              <div className={`alert ${isSuccess ? 'alert-success' : 'alert-danger'} text-center rounded-3 mb-4`}>
                 {message}
               </div>
             )}
@@ -205,8 +215,12 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-100 py-2 fw-semibold"
-              style={{ backgroundColor: '#00b4db', borderColor: '#00b4db' }}
+              className="btn btn-primary w-100 py-3 fw-semibold rounded-3"
+              style={{ 
+                fontSize: '1.1rem',
+                boxShadow: '0 4px 6px rgba(13, 110, 253, 0.2)',
+                transition: 'all 0.3s ease'
+              }}
             >
               {loading ? 'جاري إنشاء الحساب...' : 'إنشاء حساب'}
             </button>
@@ -214,12 +228,11 @@ export default function Register() {
 
           <div className="mt-4 pt-3 border-top text-center">
             <p className="text-muted mb-0">
-              لديك حساب بالفعل؟ <Link to="/login" className="text-decoration-none fw-semibold" style={{ color: '#00b4db' }}>تسجيل الدخول</Link>
+              لديك حساب بالفعل؟ <Link to="/login" className="text-decoration-none fw-semibold text-primary">تسجيل الدخول</Link>
             </p>
           </div>
         </div>
       </div>
     </div>
-
   );
 } 

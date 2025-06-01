@@ -63,19 +63,25 @@ export default function Login() {
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: 'linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)',
       padding: '20px'
     }}>
-      <div className="card shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
+      <div className="card shadow-lg border-0" style={{ 
+        maxWidth: '400px', 
+        width: '100%',
+        borderRadius: '16px',
+        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)'
+      }}>
         <div className="card-body p-5">
           <div className="text-center mb-4">
-            <h1 className="h3 fw-bold text-dark mb-2">تسجيل الدخول</h1>
+            <h1 className="h3 fw-bold text-primary mb-2">تسجيل الدخول</h1>
             <p className="text-muted">مرحباً بك مرة أخرى</p>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="mb-3 text-end">
-              <label htmlFor="email" className="form-label fw-semibold">
+            <div className="mb-4 text-end">
+              <label htmlFor="email" className="form-label fw-semibold text-primary">
                 البريد الإلكتروني
               </label>
               <input
@@ -85,14 +91,15 @@ export default function Login() {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="form-control"
+                className="form-control form-control-lg"
                 placeholder="أدخل بريدك الإلكتروني"
                 dir="rtl"
+                style={{ borderRadius: '12px' }}
               />
             </div>
 
-            <div className="mb-3 text-end">
-              <label htmlFor="password" className="form-label fw-semibold">
+            <div className="mb-4 text-end">
+              <label htmlFor="password" className="form-label fw-semibold text-primary">
                 كلمة المرور
               </label>
               <input
@@ -102,14 +109,15 @@ export default function Login() {
                 value={formData.password}
                 onChange={handleInputChange}
                 required
-                className="form-control"
+                className="form-control form-control-lg"
                 placeholder="أدخل كلمة المرور"
                 dir="rtl"
+                style={{ borderRadius: '12px' }}
               />
             </div>
 
             {message && (
-              <div className={`alert ${isSuccess ? 'alert-success' : 'alert-danger'} text-center`}>
+              <div className={`alert ${isSuccess ? 'alert-primary' : 'alert-danger'} text-center rounded-3`}>
                 {message}
               </div>
             )}
@@ -117,8 +125,12 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-100 py-2 fw-semibold"
-              style={{ backgroundColor: '#667eea', borderColor: '#667eea' }}
+              className="btn btn-primary w-100 py-3 fw-semibold rounded-3"
+              style={{ 
+                fontSize: '1.1rem',
+                boxShadow: '0 4px 6px rgba(13, 110, 253, 0.2)',
+                transition: 'all 0.3s ease'
+              }}
             >
               {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
             </button>
@@ -126,7 +138,7 @@ export default function Login() {
 
           <div className="mt-4 pt-3 border-top text-center">
             <p className="text-muted mb-3">
-              ليس لديك حساب؟ <Link to="/register" className="text-decoration-none fw-semibold" style={{ color: '#667eea' }}>إنشاء حساب جديد</Link>
+              ليس لديك حساب؟ <Link to="/register" className="text-decoration-none fw-semibold text-primary">إنشاء حساب جديد</Link>
             </p>
           </div>
         </div>

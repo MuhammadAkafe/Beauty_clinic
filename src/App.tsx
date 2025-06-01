@@ -1,5 +1,5 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import MenuBar from './components/MenuBar';
 
@@ -8,10 +8,12 @@ const LoginPage = lazy(() => import('./Server/Login'));
 const RegisterPage = lazy(() => import('./Server/Register'));
 const ServicesPage = lazy(() => import('./Server/Services'));
 const AboutPage = lazy(() => import('./Server/About'));
+const LocationPage = lazy(() => import('./Server/Location'));
+const NotFoundPage = lazy(() => import('./Server/NotFound'));
 
 function App() {
   return (
-    <Router>
+    <Router basename="/">
       <div className="app-container">
         <MenuBar />
         <main className="main-content">
@@ -20,9 +22,10 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/services" element={<ServicesPage />} />
+              <Route path="/location" element={<LocationPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </main>

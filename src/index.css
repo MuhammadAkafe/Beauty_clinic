@@ -7,6 +7,8 @@
   --light-color: #f8f9fa;
   --gradient-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   --gradient-secondary: linear-gradient(135deg, #4ecca3 0%, #45b392 100%);
+  --bs-primary: #0d6efd;
+  --bs-primary-rgb: 13, 110, 253;
 }
 
 body {
@@ -72,13 +74,13 @@ body {
 }
 
 .btn-primary {
-  background: var(--gradient-secondary);
-  border: none;
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(78, 204, 163, 0.3);
+  background-color: #0b5ed7 !important;
+  border-color: #0a58ca !important;
 }
 
 /* Form Styles */
@@ -111,4 +113,33 @@ body {
 .fade-exit-active {
   opacity: 0;
   transition: opacity 300ms ease-in;
+}
+
+.alert-primary {
+  background-color: #cfe2ff !important;
+  border-color: #b6d4fe !important;
+  color: #084298 !important;
+}
+
+.bg-primary {
+  background-color: #0d6efd !important;
+}
+
+.text-primary {
+  color: #0d6efd !important;
+}
+
+.badge.bg-primary {
+  background-color: #0d6efd !important;
+}
+
+.btn-outline-primary {
+  color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+  color: white !important;
 }

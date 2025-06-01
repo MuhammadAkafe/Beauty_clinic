@@ -13,6 +13,7 @@ const MenuBar: React.FC = () => {
           <Nav className="ms-auto">
             <Link to="/about" className="nav-link px-3">من نحن</Link>
             <Link to="/services" className="nav-link px-3">الخدمات</Link>
+            <Link to="/location" className="nav-link px-3">موقعنا</Link>
             <Link to="/login" className="nav-link px-3">تسجيل الدخول</Link>
             <Link to="/register" className="nav-link px-3">إنشاء حساب</Link>
           </Nav>
