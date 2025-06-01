@@ -33,11 +33,17 @@ const About: React.FC = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative">
-                    <div className="ratio ratio-4x3">
+                    <div className="ratio ratio-4x3 mb-4">
                       <img 
-                        src="../../src/assets/clinic.jpg" 
+                        src="/assets/clinic.jpg" 
                         alt="عيادة الطب الطبيعي" 
-                        className="rounded-3 shadow-lg object-fit-cover"
+                        className="rounded-3 shadow-lg w-100 h-100"
+                        style={{ 
+                          objectFit: 'cover',
+                          maxHeight: '400px',
+                          width: '100%',
+                          height: 'auto'
+                        }}
                       />
                     </div>
                     <div className="position-absolute bottom-0 start-0 translate-middle-y ms-4">
