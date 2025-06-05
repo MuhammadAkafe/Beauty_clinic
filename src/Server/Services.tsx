@@ -1,7 +1,20 @@
-import React from 'react';
-import Location from './Location';
-
+import React, { useEffect, useState } from 'react';
+import { Services_Api, Item } from '../types/types';
+import axiosInstance from '../axios_instance';
 const Services: React.FC = () => {
+  const [services, setServices] = useState<Services_Api[]>([]);
+
+  const getServices = async () => {
+    const response = await axiosInstance.get('/service/get_all_services/1', {
+    });
+    console.log(response.data.services);
+    setServices(response.data.services);
+  }
+
+  useEffect(() => {
+    getServices();
+  }, []);
+
   return (
     <div>
       {/* Hero Section */}
@@ -19,265 +32,43 @@ const Services: React.FC = () => {
       <div className="container py-5">
         {/* Services Section */}
         <div className="row g-4 mb-5">
-          <div className="col-md-4">
-            <div className="card border-0 shadow-lg h-100 hover-shadow transition">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-heartbeat text-primary fa-lg"></i>
+          {services.map((service: Services_Api, index: number) => (
+            <div key={index} className="col-md-4">
+              <div className="card border-0 shadow-lg h-100 hover-shadow transition">
+                <div className="card-body p-4 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <div className="d-flex align-items-center gap-3">
+                      <div className="bg-primary bg-opacity-10 rounded-circle p-3">
+                        <i className="fas fa-heartbeat text-primary fa-lg"></i>
+                      </div>
+                      <h2 className="h4 fw-bold text-dark mb-0">{service.title}</h2>
                     </div>
-                    <h2 className="h4 fw-bold text-dark mb-0">العلاج الطبيعي</h2>
+                    <span className="badge bg-primary rounded-pill">{service.status}</span>
                   </div>
-                  <span className="badge bg-primary rounded-pill">الأكثر طلباً</span>
-                </div>
-                <p className="text-muted mb-4">
-                  برامج علاجية متخصصة:
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>علاج آلام المفاصل</span>
-                    <span className="text-primary fw-bold">200 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>إعادة تأهيل الإصابات</span>
-                    <span className="text-primary fw-bold">250 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>علاج آلام الظهر والرقبة</span>
-                    <span className="text-primary fw-bold">180 ₪</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
-                    <i className="fas fa-phone me-2"></i>
-                    احجز موعد
-                  </a>
+                  <div className="flex-grow-1">
+                    <p className="text-muted mb-4">
+                     {service.sub_title}
+                    </p>
+                    <ul className="list-unstyled">
+                      {service.items.map((item: Item, index: number) => (
+                        <li key={index} className="mb-3 d-flex justify-content-between align-items-center">
+                          <span>{item.type}</span>
+                          <span className="text-primary fw-bold">{item.price} ₪</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-4">
+                    <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
+                      <i className="fas fa-phone me-2"></i>
+                      احجز موعد
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="card border-0 shadow-lg h-100 hover-shadow transition">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-hands text-primary fa-lg"></i>
-                    </div>
-                    <h2 className="h4 fw-bold text-dark mb-0">التدليك العلاجي</h2>
-                  </div>
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-check text-primary"></i>
-                    </div>
-                    <div>
-                      <span className="badge bg-primary rounded-pill">جلسة</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-muted mb-4">
-                  خدمات تدليك متخصصة:
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تدليك العضلات العميق</span>
-                    <span className="text-primary fw-bold">200 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تدليك الأنسجة الرخوة</span>
-                    <span className="text-primary fw-bold">250 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تدليك نقاط الضغط</span>
-                    <span className="text-primary fw-bold">180 ₪</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
-                    <i className="fas fa-phone me-2"></i>
-                    احجز موعد
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="card border-0 shadow-lg h-100 hover-shadow transition">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-temperature-high text-primary fa-lg"></i>
-                    </div>
-                    <h2 className="h4 fw-bold text-dark mb-0">العلاج بالحرارة والبرودة</h2>
-                  </div>
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-check text-primary"></i>
-                    </div>
-                    <div>
-                      <span className="badge bg-primary rounded-pill">جلسة</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-muted mb-4">
-                  علاجات متقدمة:
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالموجات فوق الصوتية</span>
-                    <span className="text-primary fw-bold">300 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالتبريد</span>
-                    <span className="text-primary fw-bold">250 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالأشعة تحت الحمراء</span>
-                    <span className="text-primary fw-bold">280 ₪</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
-                    <i className="fas fa-phone me-2"></i>
-                    احجز موعد
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-
-        {/* Second Row */}
-        <div className="row g-4 mb-5">
-          <div className="col-md-4">
-            <div className="card border-0 shadow-lg h-100 hover-shadow transition">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-dumbbell text-primary fa-lg"></i>
-                    </div>
-                    <h2 className="h4 fw-bold text-dark mb-0">تمارين إعادة التأهيل</h2>
-                  </div>
-                  <span className="badge bg-primary rounded-pill">برنامج</span>
-                </div>
-                <p className="text-muted mb-4">
-                  برامج تأهيلية متخصصة:
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تمارين تقوية العضلات</span>
-                    <span className="text-primary fw-bold">350 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تمارين التوازن</span>
-                    <span className="text-primary fw-bold">300 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تمارين المرونة</span>
-                    <span className="text-primary fw-bold">280 ₪</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
-                    <i className="fas fa-phone me-2"></i>
-                    احجز موعد
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="card border-0 shadow-lg h-100 hover-shadow transition">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-water text-primary fa-lg"></i>
-                    </div>
-                    <h2 className="h4 fw-bold text-dark mb-0">العلاج المائي</h2>
-                  </div>
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-check text-primary"></i>
-                    </div>
-                    <div>
-                      <span className="badge bg-primary rounded-pill">جلسة</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-muted mb-4">
-                  علاجات مائية متخصصة:
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالماء الساخن</span>
-                    <span className="text-primary fw-bold">250 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>تمارين العلاج المائي</span>
-                    <span className="text-primary fw-bold">300 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالتدليك المائي</span>
-                    <span className="text-primary fw-bold">280 ₪</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
-                    <i className="fas fa-phone me-2"></i>
-                    احجز موعد
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="card border-0 shadow-lg h-100 hover-shadow transition">
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center gap-3">
-                    <div className="bg-primary bg-opacity-10 rounded-circle p-3">
-                      <i className="fas fa-bolt text-primary fa-lg"></i>
-                    </div>
-                    <h2 className="h4 fw-bold text-dark mb-0">العلاج الكهربائي</h2>
-                  </div>
-                  <span className="badge bg-primary rounded-pill">جلسة</span>
-                </div>
-                <p className="text-muted mb-4">
-                  علاجات كهربائية متقدمة:
-                </p>
-                <ul className="list-unstyled">
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>التحفيز الكهربائي</span>
-                    <span className="text-primary fw-bold">220 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالتيار المتداخل</span>
-                    <span className="text-primary fw-bold">250 ₪</span>
-                  </li>
-                  <li className="mb-3 d-flex justify-content-between align-items-center">
-                    <span>العلاج بالتحفيز العصبي</span>
-                    <span className="text-primary fw-bold">280 ₪</span>
-                  </li>
-                </ul>
-                <div className="mt-4">
-                  <a href="tel:+972090222222" className="btn btn-outline-primary w-100">
-                    <i className="fas fa-phone me-2"></i>
-                    احجز موعد
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
 
         {/* Contact Section */}
         <div className="row justify-content-center mt-5">

@@ -3,21 +3,11 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NavigateFunction } from 'react-router-dom';
 import axiosInstance from '../axios_instance';
-interface RegisterFormData {
-  username: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-}
-
-interface RegisterResponse {
-  success: boolean;
-  message: string;
-}
+import { RegisterFormData, RegisterResponse } from '../types/auth';
 
 const create_User = async (userData: RegisterFormData): Promise<RegisterResponse> => {
   try {
-    const response = await axiosInstance.post<RegisterResponse>('/Register', userData);
+    const response = await axiosInstance.post<RegisterResponse>('/auth/Register', userData);
     return response.data;
   } 
   catch (error:any) {
@@ -25,7 +15,6 @@ const create_User = async (userData: RegisterFormData): Promise<RegisterResponse
     return { success: false, message: error.response.data.message };
   }
 };  
-
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -70,7 +59,6 @@ export default function Register() {
     return Object.keys(newErrors).length === 0;
   };
 
-  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -113,124 +101,150 @@ export default function Register() {
       setMessage(result.message);
       setLoading(false);
     }
-
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{
-      background: 'linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)',
-      padding: '20px'
-    }}>
-      <div className="card shadow-lg border-0" style={{ 
-        maxWidth: '500px', 
-        width: '100%',
-        borderRadius: '16px',
-        backdropFilter: 'blur(10px)',
-        backgroundColor: 'rgba(255, 255, 255, 0.95)'
-      }}>
-        <div className="card-body p-5">
-          <div className="text-center mb-4">
-            <h1 className="h3 fw-bold text-primary mb-2">إنشاء حساب جديد</h1>
-            <p className="text-muted">انضم إلينا اليوم</p>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
+      <div className="w-full max-w-md">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4 text-end">
-              <label htmlFor="name" className="form-label fw-semibold text-primary">
-                الاسم الكامل
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleInputChange}
-                className={`form-control form-control-lg ${errors.username ? 'is-invalid' : ''}`}
-                placeholder="أدخل اسمك الكامل"
-                dir="rtl"
-                style={{ borderRadius: '12px' }}
-              />
-              {errors.username && <div className="invalid-feedback text-end">{errors.username}</div>}
+        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+          <div className="p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                إنشاء حساب جديد
+              </h1>
+              <p className="text-gray-600">انضم إلينا اليوم</p>
             </div>
 
-            <div className="mb-4 text-end">
-              <label htmlFor="email" className="form-label fw-semibold text-primary">
-                البريد الإلكتروني
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`}
-                placeholder="أدخل بريدك الإلكتروني"
-                dir="rtl"
-                style={{ borderRadius: '12px' }}
-              />
-              {errors.email && <div className="invalid-feedback text-end">{errors.email}</div>}
-            </div>
-
-            <div className="mb-4 text-end">
-              <label htmlFor="password" className="form-label fw-semibold text-primary">
-                كلمة المرور
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`}
-                placeholder="أدخل كلمة المرور"
-                dir="rtl"
-                style={{ borderRadius: '12px' }}
-              />
-              {errors.password && <div className="invalid-feedback text-end">{errors.password}</div>}
-            </div>
-
-            <div className="mb-4 text-end">
-              <label htmlFor="confirmPassword" className="form-label fw-semibold text-primary">
-                تأكيد كلمة المرور
-              </label>
-              <input
-                type="password"
-                id="confirm_password"
-                name="confirm_password"
-                value={formData.confirm_password}
-                onChange={handleInputChange}
-                className={`form-control form-control-lg ${errors.confirm_password ? 'is-invalid' : ''}`}
-                placeholder="أدخل كلمة المرور مرة أخرى"
-                dir="rtl"
-                style={{ borderRadius: '12px' }}
-              />
-              {errors.confirm_password && <div className="invalid-feedback text-end">{errors.confirm_password}</div>}
-            </div>
-
-            {message && (
-              <div className={`alert ${isSuccess ? 'alert-success' : 'alert-danger'} text-center rounded-3 mb-4`}>
-                {message}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="text-right">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                  الاسم الكامل
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      errors.username ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                    } transition duration-200 bg-white/50 backdrop-blur-sm`}
+                    placeholder="أدخل اسمك الكامل"
+                    dir="rtl"
+                  />
+                  {errors.username && (
+                    <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+                  )}
+                </div>
               </div>
-            )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn btn-primary w-100 py-3 fw-semibold rounded-3"
-              style={{ 
-                fontSize: '1.1rem',
-                boxShadow: '0 4px 6px rgba(13, 110, 253, 0.2)',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              {loading ? 'جاري إنشاء الحساب...' : 'إنشاء حساب'}
-            </button>
-          </form>
+              <div className="text-right">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  البريد الإلكتروني
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      errors.email ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                    } transition duration-200 bg-white/50 backdrop-blur-sm`}
+                    placeholder="أدخل بريدك الإلكتروني"
+                    dir="rtl"
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                  )}
+                </div>
+              </div>
 
-          <div className="mt-4 pt-3 border-top text-center">
-            <p className="text-muted mb-0">
-              لديك حساب بالفعل؟ <Link to="/login" className="text-decoration-none fw-semibold text-primary">تسجيل الدخول</Link>
-            </p>
+              <div className="text-right">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  كلمة المرور
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      errors.password ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                    } transition duration-200 bg-white/50 backdrop-blur-sm`}
+                    placeholder="أدخل كلمة المرور"
+                    dir="rtl"
+                  />
+                  {errors.password && (
+                    <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="text-right">
+                <label htmlFor="confirm_password" className="block text-sm font-medium text-gray-700 mb-2">
+                  تأكيد كلمة المرور
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    value={formData.confirm_password}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      errors.confirm_password ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                    } transition duration-200 bg-white/50 backdrop-blur-sm`}
+                    placeholder="أدخل كلمة المرور مرة أخرى"
+                    dir="rtl"
+                  />
+                  {errors.confirm_password && (
+                    <p className="mt-1 text-sm text-red-600">{errors.confirm_password}</p>
+                  )}
+                </div>
+              </div>
+
+              {message && (
+                <div className={`p-4 rounded-xl text-center ${
+                  isSuccess 
+                    ? 'bg-green-50 text-green-700 border border-green-200' 
+                    : 'bg-red-50 text-red-700 border border-red-200'
+                }`}>
+                  {message}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+              >
+                {loading ? 'جاري إنشاء الحساب...' : 'إنشاء حساب'}
+              </button>
+            </form>
+
+            <div className="mt-8 pt-6 border-t border-gray-200 text-center">
+              <p className="text-gray-600">
+                لديك حساب بالفعل؟{' '}
+                <Link 
+                  to="/login" 
+                  className="text-blue-600 font-semibold hover:text-blue-700 transition duration-200"
+                >
+                  تسجيل الدخول
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

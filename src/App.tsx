@@ -10,6 +10,7 @@ const ServicesPage = lazy(() => import('./Server/Services'));
 const AboutPage = lazy(() => import('./Server/About'));
 const LocationPage = lazy(() => import('./Server/Location'));
 const NotFoundPage = lazy(() => import('./Server/NotFound'));
+const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/location" element={<LocationPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
