@@ -18,6 +18,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
     items: []
   });
   const [inputFields, setInputFields] = useState<Item[]>([{ type: '', price: 0 }]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { fetchServices } = useServices();
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       if (editingServiceform) {
         await axiosInstance.put(`/service/update_service/${editingServiceform.service_id}`, {
@@ -56,7 +58,6 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
           items: inputFields
         });
       } else {
-
         const response = await axiosInstance.post('/service/add_service/1', {
           ...formData,
           items: inputFields
@@ -81,6 +82,8 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
       }
     } catch (error: any) {
       console.log('Error:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -211,14 +214,32 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
             )}
             {
               editingServiceform ? (
-                <button type="submit" className="btn btn-primary">
-                  <i className="bi bi-check-lg me-1"></i>
-                  Update Service
+                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Updating...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-check-lg me-1"></i>
+                      Update Service
+                    </>
+                  )}
                 </button>
               ) : (
-                <button type="submit" className="btn btn-primary">
-                  <i className="bi bi-check-lg me-1"></i>
-                  Add Service
+                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Adding...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-check-lg me-1"></i>
+                      Add Service
+                    </>
+                  )}
                 </button>
               )
             }
