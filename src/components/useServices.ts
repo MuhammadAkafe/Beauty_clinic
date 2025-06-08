@@ -1,57 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axiosInstance from '../axios_instance';
-import { Service } from '../types/Service';
+import { ServicesApi } from '../types/types';
 
+// Server-side data fetching function
+export async function getServices() {
+  try {
+    const response = await axiosInstance.get('/service/get_all_services/1');
+    return response.data.services;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch services');
+  }
+}
+
+// Client-side hook for state management
 export function useServices() {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<ServicesApi[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  
-  // Fetch all services
-  const fetchServices = async () => {
-    setLoading(true);
-    setError(null);
+  const fetchServices = useCallback(async () => {
     try {
-      const response = await axiosInstance.get('/service/get_all_services/1');
-      setServices(response.data.services);
-    } 
-    catch (err: any) {
-      setError('Failed to load services');
+      setLoading(true);
+      setError(null);
+      const data = await getServices();
+      console.log('Fetched services data:', data);
+      console.log('Number of services:', data.length);
+      setServices(data || []);
+    } catch (err: any) {
+      console.error('Error fetching services:', err);
+      setError(err.message);
+      setServices([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  };
+  }, []);
 
-  // Add a service
-  const addService = async (service: Omit<Service, 'id'>) => {
-    const response = await axiosInstance.post('/service/add', service);
-    setServices((prev) => [...prev, response.data.service]);
-  };
-
-  // Update a service
-  const updateService = async (service: Service) => {
-    const response = await axiosInstance.put(`/service/update/${service.id}`, service);
-    setServices((prev) => prev.map((s) => (s.id === service.id ? response.data.service : s)));
-  };
-
-  // Delete a service
-  const deleteService = async (id: string) => {
-    await axiosInstance.delete(`/service/delete/${id}`);
-    setServices((prev) => prev.filter((s) => s.id !== id));
-  };
-
+  // Initial fetch
   useEffect(() => {
     fetchServices();
-  }, []);
+  }, [fetchServices]);
 
   return {
     services,
     loading,
     error,
     fetchServices,
-    addService,
-    updateService,
-    deleteService,
-    setServices,
   };
 } 

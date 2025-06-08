@@ -1,119 +1,72 @@
-import React, { useState } from 'react';
-import { Service, Item } from '../types/Service';
-import { useServices } from './useServices';
+import React, { useState, useEffect } from 'react';
 import ServiceForm from './ServiceForm';
 import ServiceList from './ServiceList';
+import { Service_form } from '../types/Service';
+import { ServicesApi } from '../types/types';
+import { useServices } from './useServices';
 
 const AdminDashboard: React.FC = () => {
-  const {
-    services,
-    addService,
-    updateService,
-    deleteService,
-    loading,
-    error,
-  } = useServices();
+  const [editingServiceform, setEditingService] = useState<Service_form | null>(null);
+  const { services, loading, error, fetchServices } = useServices();
 
-  const [editingService, setEditingService] = useState<Service | null>(null);
-  const [formData, setFormData] = useState<Omit<Service, 'id'>>({
-    title: '',
-    subtitle: '',
-    status: 'Active',
-    items: [],
-  });
-  const [itemForm, setItemForm] = useState<{ type: string; price: string }>({ type: '', price: '' });
-  const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
+  // Refresh services when component mounts
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
 
-  // Item handlers
-  const handleAddOrEditItem = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!itemForm.type.trim() || !itemForm.price.trim() || isNaN(Number(itemForm.price))) return;
-    const newItem: Item = {
-      id: editingItemIndex !== null ? formData.items[editingItemIndex].id : Date.now().toString(),
-      type: itemForm.type,
-      price: Number(itemForm.price),
-    };
-    if (editingItemIndex !== null) {
-      setFormData((prev) => ({
-        ...prev,
-        items: prev.items.map((item, idx) => (idx === editingItemIndex ? newItem : item)),
-      }));
-      setEditingItemIndex(null);
-    } else {
-      setFormData((prev) => ({ ...prev, items: [...prev.items, newItem] }));
-    }
-    setItemForm({ type: '', price: '' });
-  };
-  const handleEditItem = (idx: number) => {
-    setEditingItemIndex(idx);
-    setItemForm({
-      type: formData.items[idx].type,
-      price: formData.items[idx].price.toString(),
-    });
-  };
-  const handleDeleteItem = (idx: number) => {
-    setFormData((prev) => ({ ...prev, items: prev.items.filter((_, i) => i !== idx) }));
-    if (editingItemIndex === idx) {
-      setEditingItemIndex(null);
-      setItemForm({ type: '', price: '' });
-    }
+  const handleEditComplete = () => {
+    setEditingService(null);
+    fetchServices(); // Refresh list after edit is complete
   };
 
-  // Service form submit
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (editingService) {
-      await updateService({ ...editingService, ...formData });
-      setEditingService(null);
-    } else {
-      await addService(formData);
-    }
-    setFormData({ title: '', subtitle: '', status: 'Active', items: [] });
-    setItemForm({ type: '', price: '' });
-    setEditingItemIndex(null);
-  };
-
-  // Edit service
-  const handleEdit = (service: Service) => {
-    setEditingService(service);
-    setFormData({
+  const mapApiToForm = (service: ServicesApi): Service_form => {
+    return {
+      service_id: service.service_id,
       title: service.title,
-      subtitle: service.subtitle,
+      sub_title: service.sub_title,
       status: service.status,
-      items: service.items,
-    });
-    setItemForm({ type: '', price: '' });
-    setEditingItemIndex(null);
+      items: service.items
+    };
   };
 
-  // Delete service
-  const handleDelete = async (id: string) => {
-    await deleteService(id);
+  const handleServiceUpdate = async () => {
+    try {
+      await fetchServices();
+      // Force a re-render by updating a state
+      setEditingService(prev => prev);
+    } catch (error) {
+      console.error('Error updating services:', error);
+    }
   };
 
   return (
-    <div className="container py-4">
-      <h1 className="mb-4">Services Management</h1>
-      <ServiceForm
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleFormSubmit}
-        editingService={editingService}
-        itemForm={itemForm}
-        setItemForm={setItemForm}
-        editingItemIndex={editingItemIndex}
-        setEditingItemIndex={setEditingItemIndex}
-        handleAddOrEditItem={handleAddOrEditItem}
-        handleEditItem={handleEditItem}
-        handleDeleteItem={handleDeleteItem}
-      />
-      <ServiceList
-        services={services}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-      {loading && <div className="mt-3 alert alert-info">Loading...</div>}
-      {error && <div className="mt-3 alert alert-danger">{error}</div>}
+    <div className="container-fluid py-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="h3 mb-0">Services Management</h1>
+        <span className="badge bg-primary">Total Services: {services.length}</span>
+      </div>
+
+      <div className="row">
+        {/* Table on the left */}
+        <div className="col-md-7">
+          <ServiceList 
+            services={services}
+            loading={loading}
+            error={error}
+            onEditService={(service) => setEditingService(mapApiToForm(service))}
+            onServiceUpdate={handleServiceUpdate}
+          />
+        </div>
+
+        {/* Form on the right */}
+        <div className="col-md-5">
+          <ServiceForm 
+            editingServiceform={editingServiceform}
+            onEditComplete={handleEditComplete}
+            onServiceUpdate={handleServiceUpdate}
+          />
+        </div>
+      </div>
     </div>
   );
 };

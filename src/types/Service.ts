@@ -1,15 +1,14 @@
-export type ServiceStatus = 'Active' | 'Pending' | 'Archived' | 'Disabled';
+export type ServiceStatus = 'قريبا' | 'جلسه' | 'مغلق' | 'غير متوفر';
 
 export interface Item {
-  id: string;
   type: string;
   price: number;
 }
 
-export interface Service {
-  id: string;
+export interface Service_form {
+  service_id:  number;
   title: string;
-  subtitle: string;
+  sub_title: string;
   status: ServiceStatus;
   items: Item[];
 } 

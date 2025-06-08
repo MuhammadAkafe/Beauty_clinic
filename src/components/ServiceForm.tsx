@@ -1,172 +1,232 @@
-import React from 'react';
-import { Service, Item, ServiceStatus } from '../types/Service';
+import React, { useState, useEffect } from 'react';
+import { Service_form, Item } from '../types/Service';
+import axiosInstance from '../axios_instance';
+import { ServiceStatus } from '../types/Service';
+import { useServices } from './useServices';
 
 interface ServiceFormProps {
-  formData: Omit<Service, 'id'>;
-  setFormData: React.Dispatch<React.SetStateAction<Omit<Service, 'id'>>>;
-  onSubmit: (e: React.FormEvent) => void;
-  editingService: Service | null;
-  itemForm: { type: string; price: string };
-  setItemForm: React.Dispatch<React.SetStateAction<{ type: string; price: string }>>;
-  editingItemIndex: number | null;
-  setEditingItemIndex: React.Dispatch<React.SetStateAction<number | null>>;
-  handleAddOrEditItem: (e: React.FormEvent) => void;
-  handleEditItem: (idx: number) => void;
-  handleDeleteItem: (idx: number) => void;
+  editingServiceform?: Service_form | null;
+  onEditComplete?: () => void;
+  onServiceUpdate: () => Promise<void>;
 }
 
+const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditComplete, onServiceUpdate }) => {
+  const [formData, setFormData] = useState<Omit<Service_form, 'service_id'>>({
+    title: '',
+    sub_title: '',
+    status: 'قريبا',
+    items: []
+  });
+  const [inputFields, setInputFields] = useState<Item[]>([{ type: '', price: 0 }]);
+  const { fetchServices } = useServices();
 
-const ServiceForm: React.FC<ServiceFormProps> = ({
-  formData,
-  setFormData,
-  onSubmit,
-  editingService,
-  itemForm,
-  setItemForm,
-  editingItemIndex,
-  setEditingItemIndex,
-  handleAddOrEditItem,
-  handleEditItem,
-  handleDeleteItem,
-}) =>
-  
-  (
-  <div className="card mb-4">
-    <div className="card-body">
-      <h2 className="card-title mb-4">
-        {editingService ? 'Edit Service' : 'Add New Service'}
-      </h2>
-      <form onSubmit={onSubmit}>
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="subtitle" className="form-label">
-            Sub-title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="subtitle"
-            name="subtitle"
-            value={formData.subtitle}
-            onChange={e => setFormData(prev => ({ ...prev, subtitle: e.target.value }))}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="status" className="form-label">
-            Status
-          </label>
-          <select
-            className="form-select"
-            id="status"
-            name="status"
-            value={formData.status}
-            onChange={e => setFormData(prev => ({ ...prev, status: e.target.value as ServiceStatus }))}
-          >
-            <option value="Active">Active</option>
-            <option value="Pending">Pending</option>
-            <option value="Archived">Archived</option>
-            <option value="Disabled">Disabled</option>
-          </select>
-        </div>
-        {/* Items Section */}
-        <div className="mb-3">
-          <label className="form-label">Items</label>
-          <form className="row g-2 align-items-end" onSubmit={handleAddOrEditItem}>
-            <div className="col-md-5">
+  useEffect(() => {
+    if (editingServiceform) {
+      setFormData({
+        title: editingServiceform.title,
+        sub_title: editingServiceform.sub_title,
+        status: editingServiceform.status,
+        items: editingServiceform.items
+      });
+      setInputFields(editingServiceform.items.length > 0 ? editingServiceform.items : [{ type: '', price: 0 }]);
+    }
+  }, [editingServiceform]);
+
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { type: '', price: 0 }]);
+  };
+
+  const handleRemoveFields = (index: number) => {
+    const newFields = inputFields.filter((_, idx) => idx !== index);
+    setInputFields(newFields);
+  };
+
+  const handleInputChange = (index: number, field: keyof Item, value: string | number) => {
+    const newFields = [...inputFields];
+    newFields[index] = { ...newFields[index], [field]: value };
+    setInputFields(newFields);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (editingServiceform) {
+        await axiosInstance.put(`/service/update_service/${editingServiceform.service_id}`, {
+          ...formData,
+          items: inputFields
+        });
+      } else {
+
+        const response = await axiosInstance.post('/service/add_service/1', {
+          ...formData,
+          items: inputFields
+        });
+        console.log('Service added:', response.data);
+      }
+      
+      // Update the list first
+      await onServiceUpdate();
+      
+      // Then reset form
+      setFormData({
+        title: '',
+        sub_title: '',
+        status: 'قريبا',
+        items: []
+      });
+      setInputFields([{ type: '', price: 0 }]);
+      
+      if (onEditComplete) {
+        onEditComplete();
+      }
+    } catch (error: any) {
+      console.log('Error:', error);
+    }
+  };
+
+  return (
+    <div className="card shadow-sm mb-4">
+      <div className="card-body">
+        <h2 className="card-title mb-4">
+          {editingServiceform ? 'Edit Service' : 'Add New Service'}
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label htmlFor="title" className="form-label">Title</label>
               <input
                 type="text"
                 className="form-control"
-                name="type"
-                placeholder="Type"
-                value={itemForm.type}
-                onChange={e => setItemForm(prev => ({ ...prev, type: e.target.value }))}
+                id="title"
+                placeholder="Enter service title"
+                value={formData.title}
+                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                 required
               />
             </div>
-            <div className="col-md-5">
+
+            <div className="col-md-6 mb-3">
+              <label htmlFor="subtitle" className="form-label">Sub-title</label>
               <input
-                type="number"
+                type="text"
                 className="form-control"
-                name="price"
-                placeholder="Price"
-                value={itemForm.price}
-                onChange={e => setItemForm(prev => ({ ...prev, price: e.target.value }))}
+                id="subtitle"
+                placeholder="Enter service subtitle"
+                value={formData.sub_title}
+                onChange={(e) => setFormData(prev => ({ ...prev, sub_title: e.target.value }))}
                 required
-                min="0"
               />
             </div>
-            <div className="col-md-2">
-              <button type="submit" className={`btn ${editingItemIndex !== null ? 'btn-warning' : 'btn-success'} w-100`}>
-                {editingItemIndex !== null ? 'Update' : 'Add'}
-              </button>
-            </div>
-          </form>
-          {/* Items Table */}
-          {formData.items.length > 0 && (
-            <div className="table-responsive mt-3">
-              <table className="table table-sm table-bordered align-middle">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {formData.items.map((item, idx) => (
-                    <tr key={item.id}>
-                      <td>{item.type}</td>
-                      <td>{item.price}</td>
-                      <td>
-                        <button type="button" className="btn btn-sm btn-outline-primary me-2" onClick={() => handleEditItem(idx)}>
-                          Edit
-                        </button>
-                        <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteItem(idx)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-        <div className="d-flex justify-content-end gap-2">
-          {editingService && (
-            <button
-              type="button"
-              className="btn btn-outline-secondary"
-              onClick={() => {
-                setFormData({ title: '', subtitle: '', status: 'Active', items: [] });
-                setItemForm({ type: '', price: '' });
-                setEditingItemIndex(null);
-              }}
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="status" className="form-label">Status</label>
+            <select
+              className="form-select"
+              id="status"
+              value={formData.status}
+              onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as ServiceStatus }))}
             >
-              Cancel
-            </button>
-          )}
-          <button type="submit" className="btn btn-primary">
-            {editingService ? 'Update Service' : 'Add Service'}
-          </button>
-        </div>
-      </form>
+              <option value="قريبا">قريبا</option>
+              <option value="جلسه">جلسه</option>
+              <option value="مغلق">مغلق</option>
+              <option value="غير متوفر">غير متوفر</option>
+            </select>
+          </div>
+
+          {/* Items Section */}
+          <div className="mb-4">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <label className="form-label mb-0">Items</label>
+              <small className="text-muted">Add service items with their prices</small>
+            </div>
+            
+            {inputFields.map((field, index) => (
+              <div key={index} className="row g-2 align-items-end mb-3">
+                <div className="col-md-5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Type"
+                    value={field.type}
+                    onChange={(e) => handleInputChange(index, 'type', e.target.value)}
+                  />
+                </div>
+                <div className="col-md-5">
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Price"
+                    min="0"
+                    value={field.price}
+                    onChange={(e) => handleInputChange(index, 'price', Number(e.target.value))}
+                  />
+                </div>
+                <div className="col-md-2">
+                  {index === 0 ? (
+                    <button 
+                      type="button" 
+                      className="btn btn-success w-100"
+                      onClick={handleAddFields}
+                    >
+                      <i className="bi bi-plus-lg me-1"></i>
+                      Add
+                    </button>
+                  ) : (
+                    <button 
+                      type="button" 
+                      className="btn btn-outline-danger w-100"
+                      onClick={() => handleRemoveFields(index)}
+                    >
+                      <i className="bi bi-trash me-1"></i>
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="d-flex justify-content-end gap-2">
+            {editingServiceform && (
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  setFormData({
+                    title: '',
+                    sub_title: '',
+                    status: 'قريبا',
+                    items: []
+                  });
+                  setInputFields([{ type: '', price: 0 }]);
+                  if (onEditComplete) {
+                    onEditComplete();
+                  }
+                }}
+              >
+                <i className="bi bi-x-lg me-1"></i>
+                Cancel
+              </button>
+            )}
+            {
+              editingServiceform ? (
+                <button type="submit" className="btn btn-primary">
+                  <i className="bi bi-check-lg me-1"></i>
+                  Update Service
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-primary">
+                  <i className="bi bi-check-lg me-1"></i>
+                  Add Service
+                </button>
+              )
+            }
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ServiceForm; 

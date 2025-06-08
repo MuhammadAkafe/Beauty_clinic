@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Services_Api, Item } from '../types/types';
+import { ServicesApi, Item } from '../types/types';
 import axiosInstance from '../axios_instance';
 const Services: React.FC = () => {
-  const [services, setServices] = useState<Services_Api[]>([]);
+  const [services, setServices] = useState<ServicesApi[]>([]);
 
   const getServices = async () => {
     const response = await axiosInstance.get('/service/get_all_services/1', {
@@ -32,7 +32,7 @@ const Services: React.FC = () => {
       <div className="container py-5">
         {/* Services Section */}
         <div className="row g-4 mb-5">
-          {services.map((service: Services_Api, index: number) => (
+          {services.map((service: ServicesApi, index: number) => (
             <div key={index} className="col-md-4">
               <div className="card border-0 shadow-lg h-100 hover-shadow transition">
                 <div className="card-body p-4 d-flex flex-column">
