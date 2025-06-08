@@ -44,6 +44,7 @@ export default function Login() {
       setMessage(result.message);
       setLoading(false);
       setMessage('');
+      navigate('/admin');
     } 
     else {
       setIsSuccess(result.success);
