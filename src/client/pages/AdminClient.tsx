@@ -1,7 +1,6 @@
-'use client';
 
 import React, { useState, useEffect } from 'react';
-import { getServicesServer, addServiceServer, updateServiceServer, deleteServiceServer } from '../../server/AdminServer';
+import { getServicesServer } from '../../server/AdminServer';
 import { ServicesApi } from '../../types/types';
 import ServiceForm from './ServiceForm';
 import ServiceList from './ServiceList';
@@ -29,35 +28,7 @@ export default function AdminClient() {
     fetchServices();
   }, []);
 
-  const handleAddService = async (serviceData: any) => {
-    try {
-      await addServiceServer(serviceData);
-      await fetchServices();
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
 
-  const handleUpdateService = async (serviceId: number, serviceData: any) => {
-    try {
-      await updateServiceServer(serviceId, serviceData);
-      await fetchServices();
-      setEditingService(null);
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-
-  const handleDeleteService = async (serviceId: number) => {
-    try {
-      await deleteServiceServer(serviceId);
-      await fetchServices();
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-
-  
   return (
     <div className="container-fluid py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">

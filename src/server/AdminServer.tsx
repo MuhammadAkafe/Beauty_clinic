@@ -2,10 +2,12 @@
 
 import { ServicesApi } from '../types/types';
 
+const BASE_URL = 'https://beauty-clinic-backend.onrender.com';
+
 // Server-side data fetching functions
 export async function getServicesServer(): Promise<ServicesApi[]> {
   try {
-    const response = await fetch('http://localhost:5173/service/get_all_services/1', {
+    const response = await fetch(`${BASE_URL}/service/get_all_services/1`, {
       cache: 'no-store'
     });
     
@@ -15,8 +17,7 @@ export async function getServicesServer(): Promise<ServicesApi[]> {
     
     const data = await response.json();
     return data.services;
-  } catch (error: any) 
-  {
+  } catch (error: any) {
     console.error('Server error fetching services:', error);
     throw new Error(error.message || 'Failed to fetch services');
   }
@@ -24,7 +25,7 @@ export async function getServicesServer(): Promise<ServicesApi[]> {
 
 export async function addServiceServer(serviceData: any) {
   try {
-    const response = await fetch('http://localhost:5173/service/add_service/1', {
+    const response = await fetch(`${BASE_URL}/service/add_service/1`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ export async function addServiceServer(serviceData: any) {
 
 export async function updateServiceServer(serviceId: number, serviceData: any) {
   try {
-    const response = await fetch(`http://localhost:5173/service/update_service/${serviceId}`, {
+    const response = await fetch(`${BASE_URL}/service/update_service/${serviceId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ export async function updateServiceServer(serviceId: number, serviceData: any) {
 
 export async function deleteServiceServer(serviceId: number) {
   try {
-    const response = await fetch(`http://localhost:5173/service/delete_service/${serviceId}`, {
+    const response = await fetch(`${BASE_URL}/service/delete_service/${serviceId}`, {
       method: 'DELETE',
     });
     
