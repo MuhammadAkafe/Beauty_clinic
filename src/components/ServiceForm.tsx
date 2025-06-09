@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Service_form, Item } from '../types/Service';
-import axiosInstance from '../axios_instance';
 import { ServiceStatus } from '../types/Service';
-import { useServices } from './useServices';
+import { addServiceServer, updateServiceServer } from './AdminServer';
 
 interface ServiceFormProps {
   editingServiceform?: Service_form | null;
@@ -19,7 +18,6 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
   });
   const [inputFields, setInputFields] = useState<Item[]>([{ type: '', price: 0 }]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { fetchServices } = useServices();
 
   useEffect(() => {
     if (editingServiceform) {
@@ -53,16 +51,15 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
     setIsSubmitting(true);
     try {
       if (editingServiceform) {
-        await axiosInstance.put(`/service/update_service/${editingServiceform.service_id}`, {
+        await updateServiceServer(editingServiceform.service_id, {
           ...formData,
           items: inputFields
         });
       } else {
-        const response = await axiosInstance.post('/service/add_service/1', {
+        await addServiceServer({
           ...formData,
           items: inputFields
         });
-        console.log('Service added:', response.data);
       }
       
       // Update the list first
@@ -81,7 +78,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
         onEditComplete();
       }
     } catch (error: any) {
-      console.log('Error:', error);
+      console.error('Error:', error);
     } finally {
       setIsSubmitting(false);
     }

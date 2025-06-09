@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import MenuBar from './components/MenuBar';
 
-const HomePage = lazy(() => import('./Server/Home'));
-const LoginPage = lazy(() => import('./Server/Login'));
-const RegisterPage = lazy(() => import('./Server/Register'));
-const ServicesPage = lazy(() => import('./Server/Services'));
-const AboutPage = lazy(() => import('./Server/About'));
-const LocationPage = lazy(() => import('./Server/Location'));
-const NotFoundPage = lazy(() => import('./Server/NotFound'));
+const HomePage = lazy(() => import('./client/pages/Home'));
+const LoginPage = lazy(() => import('./client/pages/Login'));
+const RegisterPage = lazy(() => import('./client/pages/Register'));
+const ServicesPage = lazy(() => import('./client/pages/Services'));
+const AboutPage = lazy(() => import('./client/pages/About'));
+const LocationPage = lazy(() => import('./client/pages/Location'));
+const NotFoundPage = lazy(() => import('./client/pages/NotFound'));
 const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
 
 function App() {
