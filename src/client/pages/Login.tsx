@@ -1,20 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../axios_instance';
-import { LoginFormData, LoginResponse } from '../../types/auth';
+import { LoginFormData } from '../../types/auth';
+import { authenticateUser } from '../../server/login';
 
-const authenticateUser = async (credentials: LoginFormData): Promise<LoginResponse> => {
-    try {
-        const response = await axiosInstance.post<LoginResponse>('/auth/Login', credentials);
-        console.log(response.data);
-        return response.data;
-    } 
-    catch (error:any) 
-    {
-        console.error('Error logging in:', error);
-        return { message: error.response.data.message, success: false };
-    }
-};
 
 export default function Login() {
   const [formData, setFormData] = useState<LoginFormData>({

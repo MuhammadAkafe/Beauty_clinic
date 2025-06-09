@@ -2,19 +2,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NavigateFunction } from 'react-router-dom';
-import axiosInstance from '../../axios_instance';
-import { RegisterFormData, RegisterResponse } from '../../types/auth';
+import { RegisterFormData } from '../../types/auth';
+import { create_User } from '../../server/Register';
 
-const create_User = async (userData: RegisterFormData): Promise<RegisterResponse> => {
-  try {
-    const response = await axiosInstance.post<RegisterResponse>('/auth/Register', userData);
-    return response.data;
-  } 
-  catch (error:any) {
-    console.error('Error registering user:', error);
-    return { success: false, message: error.response.data.message };
-  }
-};  
+
 
 export default function Register() {
   const [formData, setFormData] = useState<RegisterFormData>({

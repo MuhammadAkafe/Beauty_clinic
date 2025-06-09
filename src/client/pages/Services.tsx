@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ServicesApi, Item } from '../../types/types';
-import axiosInstance from '../../axios_instance';
+import { getServicesServer } from '../../server/AdminServer';
+import ContactUs from './ContactUs';
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServicesApi[]>([]);
 
   const getServices = async () => {
-    const response = await axiosInstance.get('/service/get_all_services/1', {
-    });
-    console.log(response.data.services);
-    setServices(response.data.services);
+    const response = await getServicesServer();
+    setServices(response);
   }
 
   useEffect(() => {
@@ -17,7 +16,7 @@ const Services: React.FC = () => {
 
   return (
     <div>
-      {/* Hero Section */}
+
       <div className="bg-primary text-white py-5 mb-5">
         <div className="container">
           <div className="row justify-content-center text-center">
@@ -30,9 +29,11 @@ const Services: React.FC = () => {
       </div>
 
       <div className="container py-5">
-        {/* Services Section */}
+
+
         <div className="row g-4 mb-5">
-          {services.map((service: ServicesApi, index: number) => (
+          {services.length > 0 ? (
+            services.map((service: ServicesApi, index: number) => (
             <div key={index} className="col-md-4">
               <div className="card border-0 shadow-lg h-100 hover-shadow transition">
                 <div className="card-body p-4 d-flex flex-column">
@@ -67,55 +68,20 @@ const Services: React.FC = () => {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Contact Section */}
-        <div className="row justify-content-center mt-5">
-          <div className="col-md-8">
-            <div className="card border-0 shadow-lg">
-              <div className="card-body p-5 text-center">
-                <h2 className="display-5 fw-bold text-dark mb-4">تواصل معنا</h2>
-                <div className="row g-4 mb-4">
-                  <div className="col-md-4">
-                    <div className="d-flex flex-column align-items-center">
-                      <div className="bg-primary bg-opacity-10 rounded-circle p-3 mb-3">
-                        <i className="fas fa-phone fa-2x text-primary"></i>
-                      </div>
-                      <h3 className="h5 fw-bold mb-2">اتصل بنا</h3>
-                      <p className="text-muted mb-0">+972528546620</p>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="d-flex flex-column align-items-center">
-                      <div className="bg-primary bg-opacity-10 rounded-circle p-3 mb-3">
-                        <i className="fas fa-envelope fa-2x text-primary"></i>
-                      </div>
-                      <h3 className="h5 fw-bold mb-2">البريد الإلكتروني</h3>
-                      <p className="text-muted mb-0">info@clinic.com</p>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="d-flex flex-column align-items-center">
-                      <div className="bg-primary bg-opacity-10 rounded-circle p-3 mb-3">
-                        <i className="fas fa-map-marker-alt fa-2x text-primary"></i>
-                      </div>
-                      <h3 className="h5 fw-bold mb-2">العنوان</h3>
-                      <p className="text-muted mb-0">الطيرة المثلث، إسرائيل</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex justify-content-center gap-3">
-                  <a href="https://wa.me/972090222222" className="btn btn-success btn-lg">
-                    <i className="fab fa-whatsapp me-2"></i>
-                    تواصل عبر واتساب
-                  </a>
-                </div>
-              </div>
+          ))
+          ) : 
+          (
+            <div className="col-md-12">
+              <div className="alert alert-info">لا يوجد خدمات متاحة حاليا</div>
             </div>
-          </div>
+          )}
         </div>
       </div>
+
+
+
+      
+      <ContactUs />
     </div>
   );
 };
