@@ -1,9 +1,9 @@
-import axios from 'axios';
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NavigateFunction } from 'react-router-dom';
-import axiosInstance from '../axios_instance';
-import { RegisterFormData, RegisterResponse } from '../types/auth';
+import axiosInstance from '../../axios_instance';
+import { RegisterFormData, RegisterResponse } from '../../types/auth';
 
 const create_User = async (userData: RegisterFormData): Promise<RegisterResponse> => {
   try {

@@ -15,7 +15,8 @@ export async function getServicesServer(): Promise<ServicesApi[]> {
     
     const data = await response.json();
     return data.services;
-  } catch (error: any) {
+  } catch (error: any) 
+  {
     console.error('Server error fetching services:', error);
     throw new Error(error.message || 'Failed to fetch services');
   }

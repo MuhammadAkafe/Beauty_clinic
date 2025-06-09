@@ -1,7 +1,7 @@
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
-import MenuBar from './components/MenuBar';
+import MenuBar from './client/pages/MenuBar';
 
 const HomePage = lazy(() => import('./client/pages/Home'));
 const LoginPage = lazy(() => import('./client/pages/Login'));
@@ -10,7 +10,7 @@ const ServicesPage = lazy(() => import('./client/pages/Services'));
 const AboutPage = lazy(() => import('./client/pages/About'));
 const LocationPage = lazy(() => import('./client/pages/Location'));
 const NotFoundPage = lazy(() => import('./client/pages/NotFound'));
-const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
+const AdminDashboard = lazy(() => import('./client/pages/AdminClient'));
 
 function App() {
   return (

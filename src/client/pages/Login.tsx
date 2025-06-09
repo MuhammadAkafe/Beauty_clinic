@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../axios_instance';
-import { LoginFormData, LoginResponse } from '../types/auth';
+import axiosInstance from '../../axios_instance';
+import { LoginFormData, LoginResponse } from '../../types/auth';
 
 const authenticateUser = async (credentials: LoginFormData): Promise<LoginResponse> => {
     try {

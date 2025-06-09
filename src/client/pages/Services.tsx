@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ServicesApi, Item } from '../types/types';
-import axiosInstance from '../axios_instance';
+import { ServicesApi, Item } from '../../types/types';
+import axiosInstance from '../../axios_instance';
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServicesApi[]>([]);
 

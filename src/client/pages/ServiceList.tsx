@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ServicesApi } from '../types/types';
-import axiosInstance from '../axios_instance';
+import { ServicesApi } from '../../types/types';
+import axiosInstance from '../../axios_instance';
 
 interface ServiceListProps {
   services: ServicesApi[];
