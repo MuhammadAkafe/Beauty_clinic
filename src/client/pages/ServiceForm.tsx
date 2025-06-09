@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Service_form, Item } from '../types/Service';
-import { ServiceStatus } from '../types/Service';
-import { addServiceServer, updateServiceServer } from './AdminServer';
+import { Service_form, Item } from '../../types/Service';
+import { ServiceStatus } from '../../types/Service';
+import { addServiceServer, updateServiceServer } from '../../server/AdminServer';
 
 interface ServiceFormProps {
   editingServiceform?: Service_form | null;

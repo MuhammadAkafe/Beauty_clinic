@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import ServicesServer from './ServicesServer';
+import ServicesServer from '../../server/ServicesServer';
 
 export default function ServicesClient() {
   return (

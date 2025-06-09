@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { getServicesServer, addServiceServer, updateServiceServer, deleteServiceServer } from './AdminServer';
-import { ServicesApi } from '../types/types';
+import { getServicesServer, addServiceServer, updateServiceServer, deleteServiceServer } from '../../server/AdminServer';
+import { ServicesApi } from '../../types/types';
 import ServiceForm from './ServiceForm';
 import ServiceList from './ServiceList';
 
