@@ -95,6 +95,7 @@ export default function Register() {
       });
       setErrors({});
       setMessage(result.message);
+      navigate('/login');
     }
     else {
       setIsSuccess(result.success);
