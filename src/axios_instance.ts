@@ -1,12 +1,9 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
 
-dotenv.config();
+console.log('Current environment:', import.meta.env.MODE);
+console.log('API URL:', import.meta.env.VITE_API_URL);
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-if (!BASE_URL) {
-    throw new Error('REACT_APP_BASE_URL is not defined in the environment variables');
-}
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
@@ -14,8 +11,6 @@ const axiosInstance = axios.create({
         'Content-Type': 'application/json',
     },
 });
-
-
 
 export default axiosInstance;
 

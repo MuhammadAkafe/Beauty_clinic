@@ -4,7 +4,8 @@ import { LoginFormData } from '../../types/auth';
 import { authenticateUser } from '../../server/login';
 
 
-export default function Login() {
+export default function Login() 
+{
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     password: ''
