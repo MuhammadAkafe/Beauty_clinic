@@ -25,17 +25,23 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const result = await authenticateUser(formData);
-    if (result.success) {
-      setIsSuccess(result.success);
-      setMessage(result.message);
-      setLoading(false);
-      setMessage('');
-      navigate('/admin');
-    } 
-    else {
-      setIsSuccess(result.success);
-      setMessage(result.message);
+    setMessage('');
+    
+    try {
+      const result = await authenticateUser(formData);
+      
+      if (result.success) {
+        setIsSuccess(true);
+        setMessage(result.message);
+        navigate('/admin');
+      } else {
+        setIsSuccess(false);
+        setMessage(result.message);
+      }
+    } catch (error) {
+      setIsSuccess(false);
+      setMessage('حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.');
+    } finally {
       setLoading(false);
     }
   };

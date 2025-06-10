@@ -3,7 +3,7 @@ import { RegisterFormData, RegisterResponse } from "../types/auth";
 
 export const create_User = async (userData: RegisterFormData): Promise<RegisterResponse> => {
     try {
-      const response = await axiosInstance.post<RegisterResponse>('/auth/Register', userData);
+      const response = await axiosInstance.post('/auth/Register', userData);
       return response.data;
     } 
     catch (error:any) {
