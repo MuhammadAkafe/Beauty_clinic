@@ -6,7 +6,8 @@ export const create_User = async (userData: RegisterFormData): Promise<RegisterR
       const response = await axiosInstance.post('/auth/Register', userData);
       return response.data;
     } 
-    catch (error:any) {
+    catch (error:any) 
+    {
       console.error('Error registering user:', error);
       return { success: false, message: error.response.data.message };
     }
