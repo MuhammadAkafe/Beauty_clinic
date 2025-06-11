@@ -21,6 +21,7 @@ export async function getServicesServer(): Promise<ServicesApi[]> {
 // Server Component
 export default async function ServicesServer() {
   const services = await getServicesServer();
+
   
   return (
     <div>

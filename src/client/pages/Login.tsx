@@ -30,7 +30,7 @@ export default function Login()
     
     try {
       const result = await authenticateUser(formData);
-      
+      console.log(result);
       if (result.success) {
         setIsSuccess(true);
         setMessage(result.message);

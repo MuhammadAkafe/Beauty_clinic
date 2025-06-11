@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { ServicesApi, Item } from '../../types/types';
 import { getServicesServer } from '../../server/AdminServer';
 import ContactUs from './ContactUs';
+
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServicesApi[]>([]);
 
   const getServices = async () => {
-    const response = await getServicesServer();
-    setServices(response);
+    const servies = await getServicesServer();
+    setServices(servies);
   }
 
   useEffect(() => {
