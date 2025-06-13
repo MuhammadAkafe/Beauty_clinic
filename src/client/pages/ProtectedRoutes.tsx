@@ -1,8 +1,7 @@
 
 
 
-import React, { useState } from 'react'
-import { authenticateUser } from '../../server/login'
+import React from 'react'
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 import { Navigate } from 'react-router-dom';
 interface DecodedToken extends JwtPayload {
@@ -12,7 +11,6 @@ interface DecodedToken extends JwtPayload {
 
 function ProtectedRoutes({children}: {children: React.ReactNode}) {
 
-  const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem('accessToken');
 
