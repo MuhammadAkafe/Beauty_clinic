@@ -22,10 +22,7 @@ function App() {
           <Suspense fallback={<div className="loading">جاري التحميل...</div>}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={
-                <ProtectedRoutes>
-                <AboutPage />
-                </ProtectedRoutes>} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/location" element={<LocationPage />} />
               <Route path="/login" element={<LoginPage />} />

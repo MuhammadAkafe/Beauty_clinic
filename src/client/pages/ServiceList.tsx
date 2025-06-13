@@ -12,13 +12,13 @@ interface ServiceListProps {
   onServiceUpdate: () => Promise<void>;
 }
 
-const ServiceList: React.FC<ServiceListProps> = ({ 
+const ServiceList = ({ 
   services, 
   loading, 
   error, 
   onEditService, 
   onServiceUpdate,
-}) => {
+}: ServiceListProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [service_id, setServiceToDelete] = useState<number | null>(null);
 
