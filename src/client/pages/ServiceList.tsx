@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ServicesApi } from '../../types/types';
 import axiosInstance from '../../axios_instance';
 import Edit_Services from './Edit_Services';
-import Delete_servies from './Delete_servies';
+import Delete_servies from './Delete_service.tsx';
 
 interface ServiceListProps {
   services: ServicesApi[];

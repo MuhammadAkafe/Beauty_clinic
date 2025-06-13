@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Service_form, Item } from '../../types/Service';
 import { ServiceStatus } from '../../types/Service';
 import { addServiceServer, updateServiceServer } from '../../server/API';
+import Add_items from './Add_items';
+import Update_Service from './Update_Service';
 
 interface ServiceFormProps {
   editingServiceform?: Service_form | null;
@@ -79,7 +81,8 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
       }
     } catch (error: any) {
       console.error('Error:', error);
-    } finally {
+    } 
+    finally {
       setIsSubmitting(false);
     }
   };
@@ -134,115 +137,14 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ editingServiceform, onEditCom
             </select>
           </div>
 
-          {/* Items Section */}
-          <div className="mb-4">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <label className="form-label mb-0">Items</label>
-              <small className="text-muted">Add service items with their prices</small>
-            </div>
-            
-            {inputFields.map((field, index) => (
-              <div key={index} className="row g-2 align-items-end mb-3">
-                <div className="col-md-5">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Type"
-                    value={field.type}
-                    onChange={(e) => handleInputChange(index, 'type', e.target.value)}
-                  />
-                </div>
-                <div className="col-md-5">
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Price"
-                    min="0"
-                    value={field.price}
-                    onChange={(e) => handleInputChange(index, 'price', Number(e.target.value))}
-                  />
-                </div>
-                <div className="col-md-2">
-                  {index === 0 ? (
-                    <button 
-                      type="button" 
-                      className="btn btn-success w-100"
-                      onClick={handleAddFields}
-                    >
-                      <i className="bi bi-plus-lg me-1"></i>
-                      Add
-                    </button>
-                  ) : (
-                    <button 
-                      type="button" 
-                      className="btn btn-outline-danger w-100"
-                      onClick={() => handleRemoveFields(index)}
-                    >
-                      <i className="bi bi-trash me-1"></i>
-                      Remove
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
 
-          
+          <Add_items inputFields={inputFields} handleInputChange={handleInputChange} handleAddFields={handleAddFields} handleRemoveFields={handleRemoveFields} />
 
-          <div className="d-flex justify-content-end gap-2">
-            {editingServiceform && (
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={() => {
-                  setFormData({
-                    title: '',
-                    sub_title: '',
-                    status: 'قريبا',
-                    items: []
-                  });
-                  setInputFields([{ type: '', price: 0 }]);
-                  if (onEditComplete) {
-                    onEditComplete();
-                  }
-                }}
-              >
-                <i className="bi bi-x-lg me-1"></i>
-                Cancel
-              </button>
-            )}
-            {
-              editingServiceform ? (
-                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                      Updating...
-                    </>
-                  ) : (
-                    <>
-                      <i className="bi bi-check-lg me-1"></i>
-                      Update Service
-                    </>
-                  )}
-                </button>
-              ) : (
-                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                      Adding...
-                    </>
-                  ) : (
-                    <>
-                      <i className="bi bi-check-lg me-1"></i>
-                      Add Service
-                    </>
-                  )}
-                </button>
-              )
-            }
-          </div>
+          <Update_Service editingServiceform={editingServiceform || null} onEditComplete={onEditComplete} setFormData={setFormData} setInputFields={setInputFields} isSubmitting={isSubmitting} />
+
+
+
+
         </form>
       </div>
     </div>
