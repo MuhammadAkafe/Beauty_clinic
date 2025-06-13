@@ -5,15 +5,14 @@ import axiosInstance from '../axios_instance';
 // Server-side data fetching functions
 
 
-export async function getServicesServer(): Promise<ServicesApi[]> {
+export async function getServicesServer(): Promise<ServicesApi[] | string> {
   try {
     const response = await axiosInstance.get(`/service/get_all_services/1`);
     return response.data.services;
   } 
   catch (error: any) 
   {
-    console.error('Server error fetching services:', error);
-    throw new Error(error.message || 'Failed to fetch services');
+    return error.response.data.message;
   }
 }
 
@@ -22,7 +21,8 @@ export async function addServiceServer(serviceData: any) {
     const response = await axiosInstance.post(`/service/add_service/1`, serviceData);
     
     return response.data;
-  } catch (error: any) {
+  } catch (error: any) 
+  {
     throw new Error(error.message || 'Failed to add service');
   }
 }

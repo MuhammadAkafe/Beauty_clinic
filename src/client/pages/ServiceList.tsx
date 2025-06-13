@@ -18,7 +18,8 @@ const ServiceList = ({
   error, 
   onEditService, 
   onServiceUpdate,
-}: ServiceListProps) => {
+}: ServiceListProps) => 
+  {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [service_id, setServiceToDelete] = useState<number | null>(null);
 

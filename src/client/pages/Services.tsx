@@ -3,27 +3,26 @@ import { ServicesApi, Item } from '../../types/types';
 import { getServicesServer } from '../../server/API';
 import ContactUs from './ContactUs';
 
+
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServicesApi[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const getServices = async () => 
   {
-    try
-    {
       setLoading(true);
-      const servies = await getServicesServer();
-      setServices(servies);
-     
-    }
-    catch (error)
-    {
-      console.log(error);
-    }
-    finally
-    {
+      const data = await getServicesServer();
+      if (Array.isArray(data)) {
+        setServices(data);
+      } 
+      else
+      {
+        setError(data);
+      }
       setLoading(false);
-    }
   }
+
+
   useEffect(() => {
     getServices();
   }, []);
@@ -104,15 +103,6 @@ const Services: React.FC = () => {
   </div>
 </div>
 )}
-
-
-
-
-
-
-
-
-
 
 
       

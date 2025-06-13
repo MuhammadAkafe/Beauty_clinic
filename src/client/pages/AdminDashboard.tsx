@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { getServicesServer } from '../../server/API';
 import { ServicesApi } from '../../types/types';
@@ -12,23 +11,21 @@ export default function AdminDashboard() {
   const [editingService, setEditingService] = useState<ServicesApi | null>(null);
 
   const fetchServices = async () => {
-    try {
       setLoading(true);
       const data = await getServicesServer();
-      setServices(data);
+      if (Array.isArray(data)) {
+        setServices(data);
       setError(null);
-    } catch (err: any) {
-      setError(err.message);
-    } 
-    finally {
+      } 
+      else {
+        setError(data);
+      }
       setLoading(false);
-    }
   };
 
   useEffect(() => {
     fetchServices();
   }, []);
-
 
   return (
     <div className="container-fluid py-4">
@@ -36,6 +33,7 @@ export default function AdminDashboard() {
         <h1 className="h3 mb-0">Services Management</h1>
         <span className="badge bg-primary">Total Services: {services.length}</span>
       </div>
+
 
       <div className="row">
         <div className="col-md-7">

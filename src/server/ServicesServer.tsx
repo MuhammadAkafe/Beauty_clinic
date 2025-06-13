@@ -1,19 +1,22 @@
 'use server';
 
 import { getServicesServer } from './API';
+import { ServicesApi } from '../types/types';
 
 // Server Component
-export default async function ServicesServer() {
+export default async function ServicesServer() {``
   const services = await getServicesServer();
-  return (
-    <div>
-      {services.map((service) => (
-        <div key={service.service_id}>
-          <h3>{service.title}</h3>
-          <p>{service.sub_title}</p>
-          <span>{service.status}</span>
-        </div>
-      ))}
-    </div>
-  );
+  if (Array.isArray(services)) {
+    return services.map((service: ServicesApi) => (
+      <div key={service.service_id}>
+        <h3>{service.title}</h3>
+        <p>{service.sub_title}</p>
+        <span>{service.status}</span>
+      </div>
+    ));
+  } else {
+    return <div>{services}</div>;
+  }
+
+  
 } 
