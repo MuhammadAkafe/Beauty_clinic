@@ -6,7 +6,8 @@ export interface Item
     price: number;
   }
   
-  export interface ServicesApi {
+  export interface ServicesApi 
+  {
     service_id: number;
     title: string;
     sub_title: string;  

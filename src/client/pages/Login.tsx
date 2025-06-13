@@ -30,15 +30,12 @@ export default function Login()
     
     try {
       const result = await authenticateUser(formData);
-      console.log(result);
-      if (result.success) {
-        setIsSuccess(true);
-        setMessage(result.message);
-        navigate('/admin');
-      } else {
-        setIsSuccess(false);
-        setMessage(result.message);
-      }
+      if(!result) throw new Error('Failed to login');
+      setIsSuccess(true);
+      setMessage(result.message);
+      localStorage.setItem('accessToken', result.accessToken || '');
+      
+      navigate('/admin');
     } catch (error) {
       setIsSuccess(false);
       setMessage('حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.');

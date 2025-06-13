@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { ServicesApi, Item } from '../../types/types';
-import { getServicesServer } from '../../server/AdminServer';
+import { getServicesServer } from '../../server/API';
 import ContactUs from './ContactUs';
 
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServicesApi[]>([]);
-
-  const getServices = async () => {
-    const servies = await getServicesServer();
-    setServices(servies);
+  const getServices = async () => 
+  {
+    try
+    {
+      const servies = await getServicesServer();
+      setServices(servies);
+    }
+    catch (error)
+    {
+      console.log(error);
+    }
   }
-
   useEffect(() => {
     getServices();
   }, []);
@@ -30,8 +36,6 @@ const Services: React.FC = () => {
       </div>
 
       <div className="container py-5">
-
-
         <div className="row g-4 mb-5">
           {services.length > 0 ? (
             services.map((service: ServicesApi, index: number) => (

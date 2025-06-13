@@ -8,7 +8,6 @@ import axiosInstance from '../axios_instance';
 export async function getServicesServer(): Promise<ServicesApi[]> {
   try {
     const response = await axiosInstance.get(`/service/get_all_services/1`);
-    
     return response.data.services;
   } 
   catch (error: any) 
@@ -43,7 +42,8 @@ export async function deleteServiceServer(serviceId: number) {
     const response = await axiosInstance.delete(`/service/delete_service/${serviceId}`);
     return response.data;
   }
-   catch (error: any) {
+   catch (error: any) 
+   {
     throw new Error(error.message || 'Failed to delete service');
   }
 } 

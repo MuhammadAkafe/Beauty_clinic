@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { getServicesServer } from '../../server/AdminServer';
+import { getServicesServer } from '../../server/API';
 import { ServicesApi } from '../../types/types';
 import ServiceForm from './ServiceForm';
 import ServiceList from './ServiceList';
 
-export default function AdminClient() {
+export default function AdminDashboard() {
   const [services, setServices] = useState<ServicesApi[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +19,8 @@ export default function AdminClient() {
       setError(null);
     } catch (err: any) {
       setError(err.message);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };

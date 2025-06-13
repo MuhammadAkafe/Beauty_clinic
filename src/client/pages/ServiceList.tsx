@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ServicesApi } from '../../types/types';
 import axiosInstance from '../../axios_instance';
+import Edit_Services from './Edit_Services';
+import Delete_servies from './Delete_servies';
 
 interface ServiceListProps {
   services: ServicesApi[];
@@ -15,7 +17,7 @@ const ServiceList: React.FC<ServiceListProps> = ({
   loading, 
   error, 
   onEditService, 
-  onServiceUpdate 
+  onServiceUpdate,
 }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [service_id, setServiceToDelete] = useState<number | null>(null);
@@ -68,91 +70,13 @@ const ServiceList: React.FC<ServiceListProps> = ({
 
   return (
     <>
-      <div className="card shadow-sm">
-        <div className="card-body">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle">
-              <thead className="table-light">
-                <tr>
-                  <th>Title</th>
-                  <th>li</th>
-                  <th>Status</th>
-                  <th className="text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {services && services.map((service) => (
-                  <tr key={service.service_id}>
-                    <td>{service.title}</td>
-                    <td>{service.sub_title}</td>
-                    <td>
-                      <span className={`badge bg-${service.status === 'قريبا' ? 'success' : service.status === 'جلسه' ? 'warning' : service.status === 'مغلق' ? 'danger' : 'secondary'}`}>
-                        {service.status}
-                      </span>
-                    </td>
-                    <td className="text-end">
-                      <button 
-                        className="btn btn-sm btn-outline-primary me-2"
-                        onClick={() => onEditService(service)}
-                      >
-                        <i className="bi bi-pencil me-1"></i>
-                        Edit
-                      </button>
-                      <button 
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDeleteClick(service.service_id)}
-                      >
-                        <i className="bi bi-trash me-1"></i>
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
 
-      {/* Delete Confirmation Modal */}
-      <div className={`modal fade ${showDeleteModal ? 'show' : ''}`} 
-           style={{ display: showDeleteModal ? 'block' : 'none' }}
-           tabIndex={-1}>
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Confirm Delete</h5>
-              <button 
-                type="button" 
-                className="btn-close" 
-                onClick={() => setShowDeleteModal(false)}
-              ></button>
-            </div>
-            <div className="modal-body">
-              Are you sure you want to delete this service? This action cannot be undone.
-            </div>
-            <div className="modal-footer">
-              <button 
-                type="button" 
-                className="btn btn-secondary" 
-                onClick={() => setShowDeleteModal(false)}
-              >
-                Cancel
-              </button>
-              <button 
-                type="button" 
-                className="btn btn-danger" 
-                onClick={handleConfirmDelete}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {showDeleteModal && (
-        <div className="modal-backdrop fade show"></div>
-      )}
+    <Edit_Services services={services} onEditService={onEditService} handleDeleteClick={handleDeleteClick} />
+
+    <Delete_servies showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} handleConfirmDelete={handleConfirmDelete} />
+
+
+
     </>
   );
 };
